@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newrelic-python-demo
+  namespace: afrank-dev
+  labels:
+    app: newrelic-python-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newrelic-python-demo
+  template:
+    metadata:
+      labels:
+        app: newrelic-python-demo
+    spec:
+      serviceAccountName: newrelic-python-demo
+      automountServiceAccountToken: true
+      containers:
+      - name: newrelic-python-demo
+        image: afrank/newrelic-python-demo:latest
+        imagePullPolicy: Always
+        env:
+        - name: LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-python-demo-secrets
+              key: LICENSE
+        ports:
+        - containerPort: 8000
+

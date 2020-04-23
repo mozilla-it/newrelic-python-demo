@@ -1,3 +1,4 @@
 newrelic
 gunicorn
 Flask
+google-cloud-profiler
